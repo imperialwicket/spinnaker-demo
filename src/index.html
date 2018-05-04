@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<title>Spinnaker Demo Site</title>
+	</head>
+
+
+        <h2>spinnaker-demo</h2>
+        <p>This project is an end-to-end sample for triggering Jenkins jobs from GitHub (with unique per-branch options) and triggering a Spinnaker deploy pipeline with successful Jenkins jobs for particular branches.<p>
+        <p>Flow and key considerations:
+        <ul>
+          <li>Test and Build/Package scripts are included. The package is a debian package that expects to install on a bare server image (it installs its own dependencies - nginx in this case)</li>
+          <li>Test and build/package scripts are executed via jenkins-pipeline using Jenkinsfile in the repo root. Logic for skipping apt repo deploy for non-master branches is located in Jenkinsfile.</li>
+          <li>GitHub is configured with a protected master branch such that you can only merge to master from a pull request that has passed its checks. This is a good place to also require a review (strictly enforcing multiple developer's review of each PR before it can be deployed).</li>
+          <li>After successful tests on the PR, a developer can merge to master, starting another set of tests (these could be the same or different, again controlled in Jenkinsfile).</li>
+          <li>After successful tests on master, the Jenkinsfile executes the build/package scripts and attempts to push a debian package to an apt repository</li>
+          <li>Spinnaker is configured to listen for successful build completion for the spinnaker-demo master branch. After this success is noticed, Spinnaker triggers its demo-deploy pipeline.</li>
+          <li>Spinnaker's demo-deploy pipeline consists of Bake and Deploy. Bake fetches the latest versioned package from our configured apt repository (matching the master commit) and Deploy takes a successfully baked AMI and deploys it to a new Cluster.</li>
+          <li>The test config is an automated red/black deploy with rollback capability. This means as soon as the new cluster is healthy, the old cluster is disabled (not destroyed). Someone can review post deploy and manually revert or destroy the old cluster</li>
+        </ul>
+        </p>
+
+        <h4>Meta</h4>
+	<p>Release: VERSION</p>
+	<p>Contributors:
+	  <ul>
+	    <li>make a user list, they're easy sample updates</li>
+	  </ul>
+	</p>
+</html>

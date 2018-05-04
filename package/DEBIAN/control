@@ -1,0 +1,8 @@
+Package: spinnaker-demo
+Architecture: all
+Maintainer: spinnaker-demo devs <spinnaker-demo@example.com>
+Section: misc
+Priority: optional
+Version: VERSION
+Depends: nginx
+Description: spinnaker-demo project

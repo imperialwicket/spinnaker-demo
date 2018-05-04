@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Enable our nginx site...
+sudo ln -s /etc/nginx/sites-available/spinnaker-demo /etc/nginx/sites-enabled/
+
+# Remove 'default' site
+sudo rm -f /etc/nginx/sites-enabled/default
+
+# Restart nginx
+if [ -f /bin/systemctl ]; then
+  sudo systemctl reload nginx
+else
+  sudo service nginx reload
+fi

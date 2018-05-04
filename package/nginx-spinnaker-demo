@@ -1,0 +1,10 @@
+# Default nginx site for spinnaker-demo
+
+server {
+	listen 80 default_server;
+	root /opt/spinnaker-demo;
+	index index.html;
+	location / {
+		try_files $uri $uri/ =404;
+	}
+}
