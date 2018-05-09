@@ -31,6 +31,7 @@ echo "Packaging..."
 sleep 2
 ./package.sh $fullversion
 
-# Expect $BUCKET to be set in Jenkins credentials and fetched in pipeline.
+# Expect $BUCKET, $ACCESS_KEY_ID, $SECRET_ACCESS_KEY to be set in Jenkins 
+# credentials and fetched in pipeline.
 PACKAGE_PATH=build
-deb-s3 upload --bucket $BUCKET --arch amd64 --codename trusty --preserve-versions true $PACKAGE_PATH/*.deb
+deb-s3 upload --bucket $BUCKET --access-key-id $ACCESS_KEY_ID --secret-access-key $SECRET_ACCESS_KEY --arch amd64 --codename trusty --preserve-versions true $PACKAGE_PATH/*.deb
