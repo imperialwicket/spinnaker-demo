@@ -6,21 +6,31 @@ pipeline {
         SECRET_ACCESS_KEY = credentials('jenkins-aws-s3-spinnaker-demo-secret-access-key')
     }
     stages {
-        stage('Test1') {
+        stage('Preliminary Tests') {
             steps {
                 parallel (
-                    "Test 1A": {
-                        sh './test/test1a.sh'
+                    "Framework Unit Testing": {
+                        sh './test/test-wrapper.sh "Unit" 5'
                     },
-                    "Test 1B": {
-                        sh './test/test1b.sh'
+                    "Functional Tests": {
+                        sh './test/test-wrapper.sh "Functional" 10'
                     }
                 )
             }
         }
-        stage('Test2') {
+        stage('SAST') {
             steps {
-                sh './test/test2.sh'
+                sh './test/test-wrapper.sh "SAST" 15'
+            }
+        }
+        stage('Automated Integration Tests') {
+            steps {
+                sh './test/test-wrapper.sh "Integration" 10'
+            }
+        }
+        stage('Performance and Load Tests') {
+            steps {
+                sh './test/test-wrapper.sh "Load tests" 15'
             }
         }
         stage('Build') {
