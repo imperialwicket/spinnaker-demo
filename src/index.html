@@ -16,7 +16,7 @@
         <p>This project is an end-to-end sample for triggering Jenkins jobs from GitHub (with unique per-branch options) and triggering a Spinnaker deploy pipeline with successful Jenkins jobs for particular branches.<p>
         <p>Flow and key considerations:
         <ul>
-          <li>Test and Build/Package scripts are included. The package is a debian package that expects to install on a bare server image (it installs its own dependencies - nginx in this case)</li>
+          <li>Test and Build/Package scripts are included. The package is a debian package that expects to install on a bare server image (it installs and configures its own dependencies - nginx in this case)</li>
           <li>Test and build/package scripts are executed via jenkins-pipeline using Jenkinsfile in the repo root. Logic for skipping apt repo deploy for non-master branches is located in Jenkinsfile.</li>
           <li>GitHub is configured with a protected master branch such that you can only merge to master from a pull request that has passed its checks. This is a good place to also require a review (strictly enforcing multiple developer's review of each PR before it can be deployed).</li>
           <li>After successful tests on the PR, a developer can merge to master, starting another set of tests (these could be the same or different, again controlled in Jenkinsfile).</li>
